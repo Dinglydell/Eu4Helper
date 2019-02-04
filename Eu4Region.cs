@@ -9,6 +9,7 @@ namespace Eu4Helper
 		public string Name { get; set; }
 
 		public HashSet<Eu4Area> Areas { get; set; }
+		public Eu4SuperRegion SuperRegion { get; set; }
 
 		public Eu4Region(string name, PdxSublist value, Eu4WorldBase world)
 		{
@@ -16,7 +17,7 @@ namespace Eu4Helper
 			
 			if (value.Sublists.ContainsKey("areas"))
 			{
-				Areas = new HashSet<Eu4Area>(value.Sublists["areas"].Values.Select(an => world.Areas[an]));
+				Areas = new HashSet<Eu4Area>(value.Sublists["areas"].Values.Where(an => world.Areas.ContainsKey(an)).Select(an => world.Areas[an]));
 				foreach (var area in Areas)
 				{
 					if(area.Region != null)

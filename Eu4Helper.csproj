@@ -44,6 +44,7 @@
     <Compile Include="Eu4Continent.cs" />
     <Compile Include="Eu4CountryBase.cs" />
     <Compile Include="Eu4Culture.cs" />
+    <Compile Include="Eu4SuperRegion.cs" />
     <Compile Include="IEu4DiploRelation.cs" />
     <Compile Include="Eu4Province.cs" />
     <Compile Include="Eu4Region.cs" />

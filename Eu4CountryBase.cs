@@ -1,5 +1,6 @@
 ﻿using Eu4Helper;
 using PdxFile;
+using PdxUtil;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,45 +9,7 @@ using System.Threading.Tasks;
 
 namespace Eu4Helper
 {
-	public class Colour
-	{
-		public byte Red { get; set; }
-		public byte Green { get; set; }
-		public byte Blue { get; set; }
-
-		public Colour(byte r, byte g, byte b)
-		{
-			Red = r;
-			Green = g;
-			Blue = b;
-		}
-
-
-		public Colour(List<float> rgb) 
-		{
-			
-			byte r;
-			byte g;
-			byte b;
-			if(byte.TryParse(rgb[0].ToString(), out r) && byte.TryParse(rgb[1].ToString(), out g) && byte.TryParse(rgb[2].ToString(), out b))
-			{
-				Red = r;
-				Green = g;
-				Blue = b;
-			} else
-			{
-				Red = (byte)(rgb[0] * 255);
-				Green = (byte)(rgb[1] * 255);
-				Blue = (byte)(rgb[2] * 255);
-			}
-		}
-
-		public Colour(List<float> rgb, byte multiplier): this((byte)(multiplier * rgb[0]), (byte)(multiplier * rgb[1]), (byte)(multiplier * rgb[2]))
-		{
-
-		}
-
-	}
+	
 
 	public class Estate
 	{
@@ -61,7 +24,7 @@ namespace Eu4Helper
 			Type = estate.GetString("type");
 			Loyalty = estate.GetFloat("loyalty");
 			Influence = estate.GetFloat("influence");
-			Territory = estate.GetFloat("territory");
+			Territory = estate.FloatValues.ContainsKey("territory") ? estate.GetFloat("territory") : 0;
 		}
 	}
 
@@ -91,6 +54,8 @@ namespace Eu4Helper
 		public string PrimaryCulture { get; set; }
 		public List<string> AcceptedCultures { get; set; }
 		public string Religion { get; set; }
+
+		
 
 		public byte AdmTech { get; set; }
 		public byte DipTech { get; set; }
@@ -138,7 +103,22 @@ namespace Eu4Helper
 		public bool IsColonialNation { get; set; }
 		public List<int> Opinions { get; set; }
 		public HashSet<Eu4Area> States { get; set; }
+		public bool IsVanilla { get; set; }
+		public bool InHRE { get; set; }
+		public bool IsElector { get; set; }
 
-		
+		public Eu4CountryBase()
+		{
+			IsVanilla = true;
+		}
+		public Eu4CountryBase(Eu4WorldBase world)
+		{
+			World = world;
+		}
+
+
+		public abstract PdxSublist GetHistoryFile();
+		public abstract PdxSublist GetCountryFile();
+		public abstract void AddDiplomacy(PdxSublist diplomacy);
 	}
 }

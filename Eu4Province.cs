@@ -12,6 +12,7 @@ namespace Eu4Helper
 		public int ProvinceID { get; set; }
 
 		public Eu4CountryBase Owner { get; set; }
+		public string ControllerTag { get; set; }
 
 		public List<Eu4CountryBase> Cores { get; set; }
 
@@ -40,6 +41,12 @@ namespace Eu4Helper
 
 		public List<string> Flags { get; set; }
 
+		public string TradeGood { get; set; }
+
+		public List<string> LatentTradeGoods { get; set; }
+
+		public List<string> Modifiers { get; set; }
+
 		public List<string> Buildings { get; set; }
 
 		public Eu4Area Area { get; set; }
@@ -47,7 +54,8 @@ namespace Eu4Helper
 		public bool IsState { get; set; }
 		public Eu4Continent Continent { get; set; }
 		public string OriginalCulture { get; set; }
+		public string FileName { get; set; }
 
-		
+		public abstract PdxSublist GetHistoryFile();
 	}
 }
